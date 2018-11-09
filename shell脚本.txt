@@ -1,0 +1,41 @@
+[study@iZuf6ere40vgp0lwptue7oZ ~] $ project.sh
+#!/bin/bash
+# deal user order sql
+echo "拉取数据"
+# today
+today=$(date +%Y%m%d)
+thisdir=$PWD
+echo $date
+echo $thisdir
+# date_befor_3month
+date_befor_3month=`date -d '3 month ago' +%Y%m01`
+echo $date_befor_3month
+lionfuture="/sql.log"
+logdir=".log"
+#
+lionfile=$thisdir$lionfuture$yestoday$logdir
+echo $lionfile
+grep -n "user order" $lionfile > searchorder.log
+# log
+sealog="/searchorder.log"
+orderlog=$thisdir$sealog
+awk -F "[][]" '{printf "insert into user_order_log (user_id, future_code, openclose, order_type,side,price,num,client_ip) values (%s,\"%s\",%s,%s,%s,%s,%s,\"%s\"); \n",$4,$6,$8,$10,$12,$14,$16,$18}' $orderlog > userorder.sql
+# user order sql file
+sqlfile="/userorder.sql"
+sqlfiles=$thisdir$sqlfile
+echo $sqlfiles
+
+
+#connet mysql exec
+name="postgres"
+#password="admin123"
+ipdir="47.100.59.89"
+psql -h $ipdir -u $name -p admin123 < $sqlfiles
+
+# delete file
+# rm -rf $orderlog
+# rm -rf $sqlfiles
+
+
+最近三个月
+date_befor_3month=`date -d '3 month ago' +%Y%m01`
